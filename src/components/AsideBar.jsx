@@ -16,18 +16,21 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                 onOpenChange={onOpenChange}
             >
                 <Sidenav.Header>
-                    <div className="flex justify-center pt-4 pb-3">
-                        <img
-                            src={admin?.photoURL || "/images/user.png"}
-                            alt="Profile"
-                            className="w-10 h-10 rounded-full border border-gray-300 object-cover"
-                            onError={(e) => { e.currentTarget.src = "/images/user.png"; }}
-                        />
+                    <div className="flex justify-center pt-4">
+                        <div className="border rounded-full p-1">
+                            <img
+                                src={admin?.photoURL || "/images/user.png"}
+                                alt="Profile"
+                                className={`${expanded && "w-16 h-16"} w-10 h-10 rounded-full border border-gray-300 object-cover`}
+                                onError={(e) => { e.currentTarget.src = "/images/user.png"; }}
+                                loading="lazy"
+                            />
+                        </div>
                     </div>
                 </Sidenav.Header>
                 <Sidenav.Body>
                     <Nav {...navProps}>
-                        <Nav.Item icon={<Admin />}  >
+                        <Nav.Item icon={<Admin />} className={"pointer-events-none hover:bg-transparent"} >
                             <div className="font-semibold text-[#37474F]">{admin.displayName || "Admin"}</div>
                             <div className="text-xs text-gray-500">{admin.email}</div>
                         </Nav.Item>
@@ -45,7 +48,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                             <Nav.Item eventKey="5-2">Add New S</Nav.Item>
                         </Nav.Menu>
                         <Nav.Item icon={<Exit />} className={!expanded && "pointer-events-none hover:bg-transparent"}>
-                            <Button color="red" appearance="primary" className="w-full" onClick={handleLogOut}>
+                            <Button color="red" appearance="primary" style={{ borderRadius: 0 }} className="w-full" onClick={handleLogOut}>
                                 Logout
                             </Button>
                         </Nav.Item>
