@@ -1,19 +1,12 @@
-import { useContext, useState } from "react"
-import { AuthContext } from "../context/AuthProvider"
-import AsideBar from "../components/AsideBar";
-
+import { Container, Content } from "rsuite"
 const Dashboard = () => {
-    // for aside bar
-    const [expanded, setExpanded] = useState(true);
-    const [openKeys, setOpenKeys] = useState(['3', '4'])
 
     return (
-        <div className="h-screen flex">
-            <AsideBar expanded={expanded} onExpand={setExpanded} openKeys={openKeys} onOpenChange={setOpenKeys} />
-            <div className="w-full h-full border">
+        <Container>
+            <Content>
                 Dashboard
-            </div>
-        </div>
+            </Content>
+        </Container>
     )
 }
 

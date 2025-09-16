@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Button, ButtonToolbar, Form, Schema } from "rsuite";
 import { AuthContext } from "../context/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const { StringType } = Schema.Types;
 
@@ -11,11 +12,14 @@ const model = Schema.Model({
     password: StringType().isRequired("Password is required.").minLength("6"),
 });
 
+// ----------------------------------------------------------------------------
+
 const LoginForm = () => {
     const [userInput, setUserInput] = useState({
         email: "",
         password: "",
     });
+    const navigate = useNavigate();
     const { manualLogin } = useContext(AuthContext);
 
     const handleChange = (formValue) => {
@@ -23,6 +27,7 @@ const LoginForm = () => {
     };
     const handleSubmit = async () => {
         await manualLogin(userInput.email, userInput.password);
+        navigate("/");
     };
 
     return (
@@ -37,7 +42,7 @@ const LoginForm = () => {
                 <Form.Control name="password" type="password" />
             </Form.Group>
             <ButtonToolbar>
-                <Button appearance="primary" type="submit" onClick={handleSubmit}>
+                <Button appearance="primary" type="submit">
                     Submit
                 </Button>
             </ButtonToolbar>
