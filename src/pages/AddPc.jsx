@@ -23,7 +23,7 @@ const AddPc = () => {
         return { label: lab.labName, value: lab.labId }
     });
     const handleSubmit = async () => {
-        await addPc();
+        await addPc(input);
         navigate("/all-pcs");
     };
     return (
