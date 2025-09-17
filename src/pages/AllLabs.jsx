@@ -6,32 +6,37 @@ const AllLabs = () => {
     const { labs } = useContext(LabContext);
     const tableHeadings = [
         {
-            key: '1',
+            key: 'labName',
             label: 'Name',
             flexGrow: 1,
         },
         {
-            key: '2',
+            key: 'labLocation',
             label: 'Location',
             flexGrow: 1,
 
         },
         {
-            key: '3',
+            key: 'labCapacity',
             label: 'Capacity',
             flexGrow: 1,
 
         },
         {
-            key: '4',
-            label: 'Actions',
-            flexGrow: 2,
+            key: 'createdAt',
+            label: 'Created at',
+            flexGrow: 1,
 
+        },
+        {
+            key: 'actions',
+            label: 'Actions',
+            flexGrow: 1,
         },
     ]
     return (
         <div>
-            <DataTable arr={labs} tableHead={tableHeadings} />
+            <DataTable arr={labs} tableHead={tableHeadings} editRoute={"add-lab"} idName={"lab"} />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import ProtectedRoute from "./pages/ProtectedRoute"
 import Dashboard from "./pages/Dashboard"
 import Login from "./pages/Login"
 import ErrorPage from "./pages/ErrorPage"
-import AllLabs from "./pages/allLabs"
+import AllLabs from "./pages/AllLabs"
 import AddLab from "./pages/addLab"
 import AsideBar from "./components/AsideBar"
 import { useContext, useState } from "react"
@@ -12,7 +12,7 @@ import { AuthContext } from "./context/AuthProvider"
 const App = () => {
     // for aside bar
     const [expanded, setExpanded] = useState(true);
-    const [openKeys, setOpenKeys] = useState(['3', '4'])
+    const [openKeys, setOpenKeys] = useState(['3'])
     const { admin } = useContext(AuthContext);
 
     return (
@@ -25,6 +25,7 @@ const App = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/all-labs" element={<ProtectedRoute Component={AllLabs} />} />
                         <Route path="/add-lab" element={<ProtectedRoute Component={AddLab} />} />
+                        <Route path="/add-lab/:labId" element={<ProtectedRoute Component={AddLab} />} />
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
                 </div>

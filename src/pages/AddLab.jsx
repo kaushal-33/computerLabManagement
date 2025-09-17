@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, ButtonToolbar, Form, Schema } from "rsuite";
 import { LabContext } from "../context/LabProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const { StringType } = Schema.Types;
 
@@ -18,14 +18,21 @@ const model = Schema.Model({
 const AddLab = () => {
     const [input, setInput] = useState({ labName: "", labLocation: "", labCapacity: "" });
     const navigate = useNavigate();
-    const { addLab } = useContext(LabContext);
-
+    const { labId } = useParams();
+    const { labs, addLab, updateLab } = useContext(LabContext);
+    useEffect(() => {
+        if (labId !== undefined) {
+            const lab = labs.find((lab) => lab.labId === labId);
+            if (lab) {
+                setInput(lab);
+            }
+        }
+    }, [labId])
     const handleChange = (formValue) => {
         setInput(formValue);
     };
-    console.log(input)
     const handleSubmit = async () => {
-        await addLab(input);
+        if (labId === undefined) await addLab(input); else updateLab(labId, input);
         navigate("/all-labs");
     };
     return (
@@ -45,7 +52,7 @@ const AddLab = () => {
                 </Form.Group>
                 <ButtonToolbar>
                     <Button appearance="primary" type="submit">
-                        Submit
+                        {labId ? "Update" : "Add"}
                     </Button>
                 </ButtonToolbar>
             </Form>

@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react"
 import { db } from "../config/fireBase";
 
@@ -24,6 +24,24 @@ const LabProvider = ({ children }) => {
         }
     }
 
+    const updateLab = async (labId, input) => {
+        try {
+            await updateDoc(doc(db, "labs", labId), input);
+            fetchLabs();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteLab = async (labId) => {
+        try {
+            await deleteDoc(doc(db, "labs", labId));
+            fetchLabs();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const fetchLabs = async () => {
         try {
             let { docs } = await getDocs(collection(db, "labs"));
@@ -39,7 +57,7 @@ const LabProvider = ({ children }) => {
     }
 
     return (
-        <LabContext.Provider value={{ labs, loading, withPlaceholder, setLoading, setWithPlaceholder, addLab }}>
+        <LabContext.Provider value={{ labs, loading, withPlaceholder, addLab, updateLab, deleteLab }}>
             {children}
         </LabContext.Provider>
     )
