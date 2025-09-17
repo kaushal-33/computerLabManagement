@@ -3,7 +3,7 @@ import { LabContext } from "../context/LabProvider"
 import DataTable from "../components/DataTable";
 
 const AllLabs = () => {
-    const { labs } = useContext(LabContext);
+    const { labs, deleteLab } = useContext(LabContext);
     const tableHeadings = [
         {
             key: 'labName',
@@ -36,7 +36,7 @@ const AllLabs = () => {
     ]
     return (
         <div>
-            <DataTable arr={labs} tableHead={tableHeadings} editRoute={"add-lab"} idName={"lab"} />
+            <DataTable arr={labs} tableHead={tableHeadings} editRoute={"add-lab"} idName={"lab"} deleteData={deleteLab} />
         </div>
     )
 }

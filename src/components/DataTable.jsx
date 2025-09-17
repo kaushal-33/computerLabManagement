@@ -4,7 +4,7 @@ import { LabContext } from "../context/LabProvider";
 import { CloseOutline, Edit } from "@rsuite/icons";
 import { useNavigate } from "react-router-dom";
 
-const DataTable = ({ arr, tableHead, editRoute, idName }) => {
+const DataTable = ({ arr, tableHead, editRoute, idName, deleteData }) => {
     const navigate = useNavigate();
     const { loading, withPlaceholder } = useContext(LabContext);
     const { Column, HeaderCell, Cell } = Table;
@@ -54,7 +54,7 @@ const DataTable = ({ arr, tableHead, editRoute, idName }) => {
                                     {rowData => (
                                         <div style={{ display: "flex", gap: "1rem" }}>
                                             <button className="text-blue-600" title="Edit" onClick={() => { navigate(`/${editRoute}/${rowData[`${idName}Id`]}`) }}><Edit /></button>
-                                            <button className="text-red-600" title="Delete" onClick={() => console.log("Delete", rowData)}><CloseOutline /></button>
+                                            <button className="text-red-600" title="Delete" onClick={() => deleteData(rowData[`${idName}Id`])}><CloseOutline /></button>
                                         </div>
                                     )}
                                 </Cell>

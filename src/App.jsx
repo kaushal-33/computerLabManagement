@@ -8,6 +8,8 @@ import AddLab from "./pages/addLab"
 import AsideBar from "./components/AsideBar"
 import { useContext, useState } from "react"
 import { AuthContext } from "./context/AuthProvider"
+import AddPc from "./pages/AddPc"
+import AllPcs from "./pages/AllPcs"
 
 const App = () => {
     // for aside bar
@@ -26,6 +28,8 @@ const App = () => {
                         <Route path="/all-labs" element={<ProtectedRoute Component={AllLabs} />} />
                         <Route path="/add-lab" element={<ProtectedRoute Component={AddLab} />} />
                         <Route path="/add-lab/:labId" element={<ProtectedRoute Component={AddLab} />} />
+                        <Route path="/all-pcs" element={<ProtectedRoute Component={AllPcs} />} />
+                        <Route path="/add-pc" element={<ProtectedRoute Component={AddPc} />} />
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
                 </div>

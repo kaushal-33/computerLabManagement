@@ -40,12 +40,12 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                             <Nav.Item eventKey="3-2" onClick={() => navigate("/add-lab")}>Add New Lab</Nav.Item>
                         </Nav.Menu>
                         <Nav.Menu eventKey="4" title="PCs" icon={<PcFill />}>
-                            <Nav.Item eventKey="4-1" onClick={() => navigate("/all-labs")}>All PCs</Nav.Item>
-                            <Nav.Item eventKey="4-2" onClick={() => navigate("/all-labs")}>Add New PC</Nav.Item>
+                            <Nav.Item eventKey="4-1" onClick={() => navigate("/all-pcs")}>All PCs</Nav.Item>
+                            <Nav.Item eventKey="4-2" onClick={() => navigate("/add-pc")}>Add New PC</Nav.Item>
                         </Nav.Menu>
                         <Nav.Menu eventKey="5" title="Students" icon={<UserBadge />}>
-                            <Nav.Item eventKey="5-1" onClick={() => navigate("/all-labs")}>All Students</Nav.Item>
-                            <Nav.Item eventKey="5-2" onClick={() => navigate("/all-labs")}>Add New S</Nav.Item>
+                            <Nav.Item eventKey="5-1" onClick={() => navigate("/all-students")}>All Students</Nav.Item>
+                            <Nav.Item eventKey="5-2" onClick={() => navigate("/add-student")}>Add New S</Nav.Item>
                         </Nav.Menu>
                         <Nav.Item icon={<Exit />} className={!expanded && "pointer-events-none hover:bg-transparent"}>
                             <Button color="red" appearance="primary" style={{ borderRadius: 0 }} className="w-full" onClick={handleLogOut}>
