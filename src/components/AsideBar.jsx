@@ -45,7 +45,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                         </Nav.Menu>
                         <Nav.Menu eventKey="5" title="Students" icon={<UserBadge />}>
                             <Nav.Item eventKey="5-1" onClick={() => navigate("/all-students")}>All Students</Nav.Item>
-                            <Nav.Item eventKey="5-2" onClick={() => navigate("/add-student")}>Add New S</Nav.Item>
+                            <Nav.Item eventKey="5-2" onClick={() => navigate("/add-student")}>Add New Student</Nav.Item>
                         </Nav.Menu>
                         <Nav.Item icon={<Exit />} className={!expanded && "pointer-events-none hover:bg-transparent"}>
                             <Button color="red" appearance="primary" style={{ borderRadius: 0 }} className="w-full" onClick={handleLogOut}>

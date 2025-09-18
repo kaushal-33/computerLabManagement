@@ -8,17 +8,17 @@ const AllLabs = () => {
         {
             key: 'labName',
             label: 'Name',
-            flexGrow: 1,
+            flexGrow: 2,
         },
         {
             key: 'labLocation',
             label: 'Location',
-            flexGrow: 1,
+            flexGrow: 2,
 
         },
         {
             key: 'labCapacity',
-            label: 'Capacity',
+            label: 'Total Capacity',
             flexGrow: 1,
 
         },

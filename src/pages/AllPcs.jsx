@@ -9,7 +9,7 @@ const AllPcs = () => {
     const pcArr = pcs.map((pc) => {
         const { labLocation, ...rest } = pc;
         const labObj = labs.find((lab) => lab.labId === labLocation)
-        return { labLocation: labObj?.labName, ...rest };
+        return { labLocation: labObj?.labName || "Not assigned", ...rest };
     })
     const tableHeadings = [
         {

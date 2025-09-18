@@ -16,8 +16,11 @@ const LabProvider = ({ children }) => {
     }, [])
 
     const addLab = async (input) => {
+
+        const { labCapacity, ...data } = input;
+
         try {
-            await addDoc(collection(db, "labs"), { createdAt: new Date(), ...input });
+            await addDoc(collection(db, "labs"), { createdAt: new Date(), availableCapacity: parseInt(labCapacity), labCapacity: parseInt(labCapacity), ...data });
             fetchLabs();
         } catch (error) {
             console.log(error)
@@ -25,8 +28,10 @@ const LabProvider = ({ children }) => {
     }
 
     const updateLab = async (labId, input) => {
+        const { labCapacity, availableCapacity, ...data } = input;
+        console.log(labCapacity)
         try {
-            await updateDoc(doc(db, "labs", labId), input);
+            await updateDoc(doc(db, "labs", labId), { availableCapacity: parseInt(labCapacity), labCapacity: parseInt(labCapacity), ...data });
             fetchLabs();
         } catch (error) {
             console.log(error)

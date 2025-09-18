@@ -8,20 +8,18 @@ const { StringType } = Schema.Types;
 const model = Schema.Model({
     pcName: StringType().isRequired("Pc Name is required."),
     labLocation: StringType().isRequired("Lab location is required."),
-    pcStatus: StringType().isRequired("Pc status is required."),
 });
 
 const AddPc = () => {
-    const [input, setInput] = useState({ pcName: "", labLocation: "", pcStatus: "" });
+    const [input, setInput] = useState({ pcName: "", labLocation: "" });
     const navigate = useNavigate();
     const { labs } = useContext(LabContext);
     const { addPc } = useContext(PcContext);
     const handleChange = (formValue) => {
         setInput(formValue);
     };
-    const labOptions = labs?.map((lab) => {
-        return { label: lab.labName, value: lab.labId }
-    });
+    const labOptions = labs?.filter(lab => lab.availableCapacity > 0).map((lab) => { return { label: lab.labName, value: lab.labId } });
+    console.log(labOptions);
     const handleSubmit = async () => {
         await addPc(input);
         navigate("/all-pcs");
@@ -44,17 +42,6 @@ const AddPc = () => {
                             <span className='capitalize'>{label}</span>
                         )}
                         placeholder="Select a lab"
-                        style={{ width: '300px', textTransform: "capitalize" }}
-                    />
-                </Form.Group>
-                <Form.Group controlId="pcStatus">
-                    <Form.ControlLabel>Status</Form.ControlLabel>
-                    <Form.Control
-                        name="pcStatus"
-                        accepter={SelectPicker}
-                        data={[{ label: "Available", value: "available" }, { label: "Occupied", value: "occupied" }, { label: "Maintenance", value: "maintenance" },]}
-                        searchable={false}
-                        placeholder="Select status"
                         style={{ width: '300px', textTransform: "capitalize" }}
                     />
                 </Form.Group>

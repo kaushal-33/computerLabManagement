@@ -3,12 +3,12 @@ import { Button, ButtonToolbar, Form, Schema } from "rsuite";
 import { LabContext } from "../context/LabProvider";
 import { useNavigate, useParams } from "react-router-dom";
 
-const { StringType } = Schema.Types;
-
+const { StringType, NumberType } = Schema.Types;
+console.log(Schema.Types);
 const model = Schema.Model({
     labName: StringType().isRequired("Lab Name is required."),
     labLocation: StringType().isRequired("Please enter Lab's location."),
-    labCapacity: StringType()
+    labCapacity: NumberType()
         .isRequired("Please enter Lab's capacity.")
         .addRule(value => {
             const num = Number(value);
@@ -46,9 +46,9 @@ const AddLab = () => {
                     <Form.ControlLabel>Location</Form.ControlLabel>
                     <Form.Control name="labLocation" type="text" />
                 </Form.Group>
-                <Form.Group controlId="labCapacity">
+                <Form.Group controlId="labCapacity" >
                     <Form.ControlLabel>Lab Capacity</Form.ControlLabel>
-                    <Form.Control name="labCapacity" type="number" />
+                    <Form.Control name="labCapacity" type="number" disabled={labId ? true : false} />
                 </Form.Group>
                 <ButtonToolbar>
                     <Button appearance="primary" type="submit">
