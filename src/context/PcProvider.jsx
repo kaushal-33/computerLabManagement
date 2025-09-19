@@ -40,8 +40,16 @@ const PcProvider = ({ children }) => {
         }
     }
 
+    const updatePc = async (id, input) => {
+        try {
+            await updateDoc(doc(db, "pcs", id), input);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <PcContext.Provider value={{ loading, withPlaceholder, addPc, pcs }}>
+        <PcContext.Provider value={{ loading, withPlaceholder, addPc, pcs, updatePc }}>
             {children}
         </PcContext.Provider>
     )

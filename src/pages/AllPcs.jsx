@@ -43,7 +43,7 @@ const AllPcs = () => {
     ]
     return (
         <div>
-            <DataTable tableHead={tableHeadings} arr={pcArr} />
+            <DataTable tableHead={tableHeadings} arr={pcArr} editRoute={"add-pc"} idName={"pc"} />
         </div>
     )
 }

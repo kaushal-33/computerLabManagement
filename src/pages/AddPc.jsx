@@ -1,8 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button, ButtonToolbar, Form, Schema, SelectPicker } from 'rsuite'
 import { LabContext } from '../context/LabProvider';
 import { PcContext } from '../context/PcProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../config/fireBase';
 const { StringType } = Schema.Types;
 
 const model = Schema.Model({
@@ -13,15 +15,38 @@ const model = Schema.Model({
 const AddPc = () => {
     const [input, setInput] = useState({ pcName: "", labLocation: "" });
     const navigate = useNavigate();
+    const { pcId } = useParams();
     const { labs } = useContext(LabContext);
-    const { addPc } = useContext(PcContext);
+    const { addPc, updatePc } = useContext(PcContext);
+
+    useEffect(() => {
+        if (pcId !== undefined) {
+            try {
+                const unSub = onSnapshot(doc(db, "pcs", pcId), (doc) => {
+                    if (doc.exists()) {
+                        console.log(doc.data())
+                        setInput(doc.data());
+                    } else {
+                        console.log("No such document!");
+                    }
+                })
+                return () => unSub();
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }, [])
+
     const handleChange = (formValue) => {
         setInput(formValue);
     };
     const labOptions = labs?.filter(lab => lab.availableCapacity > 0).map((lab) => { return { label: lab.labName, value: lab.labId } });
-    console.log(labOptions);
     const handleSubmit = async () => {
-        await addPc(input);
+        if (pcId) {
+            await updatePc(pcId, input);
+        } else {
+            await addPc(input);
+        }
         navigate("/all-pcs");
     };
     return (
@@ -47,7 +72,7 @@ const AddPc = () => {
                 </Form.Group>
                 <ButtonToolbar>
                     <Button appearance="primary" type="submit">
-                        add
+                        {pcId ? "Update" : "Add"}
                     </Button>
                 </ButtonToolbar>
             </Form>

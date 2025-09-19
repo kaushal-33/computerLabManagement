@@ -25,11 +25,15 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<ProtectedRoute Component={Dashboard} />} />
                         <Route path="/login" element={<Login />} />
+                        {/* labs */}
                         <Route path="/all-labs" element={<ProtectedRoute Component={AllLabs} />} />
                         <Route path="/add-lab" element={<ProtectedRoute Component={AddLab} />} />
                         <Route path="/add-lab/:labId" element={<ProtectedRoute Component={AddLab} />} />
+                        {/* pcs */}
                         <Route path="/all-pcs" element={<ProtectedRoute Component={AllPcs} />} />
                         <Route path="/add-pc" element={<ProtectedRoute Component={AddPc} />} />
+                        <Route path="/add-pc/:pcId" element={<ProtectedRoute Component={AddPc} />} />
+                        {/* error page */}
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
                 </div>
