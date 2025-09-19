@@ -62,7 +62,7 @@ const LabProvider = ({ children }) => {
     }
 
     return (
-        <LabContext.Provider value={{ labs, loading, withPlaceholder, addLab, updateLab, deleteLab }}>
+        <LabContext.Provider value={{ labs, loading, withPlaceholder, addLab, updateLab, deleteLab, fetchLabs }}>
             {children}
         </LabContext.Provider>
     )

@@ -1,6 +1,7 @@
-import { addDoc, collection, doc, getDocs, increment, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, increment, updateDoc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react"
 import { db } from "../config/fireBase";
+import { LabContext } from "./LabProvider";
 export const PcContext = createContext();
 
 const PcProvider = ({ children }) => {
@@ -11,7 +12,7 @@ const PcProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [withPlaceholder, setWithPlaceholder] = useState(true);
 
-    // const { labs } = useContext(LabContext);
+    const { fetchLabs } = useContext(LabContext);
 
     useEffect(() => {
         fetchPcs();
@@ -21,7 +22,9 @@ const PcProvider = ({ children }) => {
         try {
             await addDoc(collection(db, "pcs"), { createdAt: new Date(), pcStatus: "available", ...input });
             await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(-1) });
-            fetchPcs();
+            await fetchPcs();
+            await fetchLabs();
+
         } catch (error) {
             console.log(error)
         }
@@ -41,15 +44,36 @@ const PcProvider = ({ children }) => {
     }
 
     const updatePc = async (id, input) => {
+        const obj = pcs?.find(pc => pc.pcId === id)
+        console.log(obj)
+        const { labLocation } = input;
         try {
             await updateDoc(doc(db, "pcs", id), input);
+            await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(-1) });
+            await updateDoc(doc(db, "labs", obj.labLocation), { availableCapacity: increment(1) });
+            fetchPcs();
+            fetchLabs();
         } catch (error) {
             console.log(error)
         }
     }
 
+    const deletePc = async (id) => {
+        const obj = pcs?.find((pc) => pc.pcId === id);
+        const { labLocation } = obj;
+        // console.log(obj);
+        try {
+            await deleteDoc(doc(db, "pcs", id));
+            await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(1) });
+            fetchLabs();
+            fetchPcs();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-        <PcContext.Provider value={{ loading, withPlaceholder, addPc, pcs, updatePc }}>
+        <PcContext.Provider value={{ loading, withPlaceholder, addPc, pcs, updatePc, deletePc }}>
             {children}
         </PcContext.Provider>
     )

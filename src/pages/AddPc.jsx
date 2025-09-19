@@ -24,7 +24,6 @@ const AddPc = () => {
             try {
                 const unSub = onSnapshot(doc(db, "pcs", pcId), (doc) => {
                     if (doc.exists()) {
-                        console.log(doc.data())
                         setInput(doc.data());
                     } else {
                         console.log("No such document!");
