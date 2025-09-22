@@ -10,6 +10,8 @@ import { useContext, useState } from "react"
 import { AuthContext } from "./context/AuthProvider"
 import AddPc from "./pages/AddPc"
 import AllPcs from "./pages/AllPcs"
+import AddStudent from "./pages/AddStudent"
+import AllStudents from "./pages/AllStudents"
 
 const App = () => {
     // for aside bar
@@ -33,6 +35,9 @@ const App = () => {
                         <Route path="/all-pcs" element={<ProtectedRoute Component={AllPcs} />} />
                         <Route path="/add-pc" element={<ProtectedRoute Component={AddPc} />} />
                         <Route path="/add-pc/:pcId" element={<ProtectedRoute Component={AddPc} />} />
+                        {/* students */}
+                        <Route path="/add-student" element={<ProtectedRoute Component={AddStudent} />} />
+                        <Route path="/all-students" element={<ProtectedRoute Component={AllStudents} />} />
                         {/* error page */}
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
