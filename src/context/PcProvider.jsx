@@ -8,10 +8,6 @@ const PcProvider = ({ children }) => {
     // all pc
     const [pcs, setPcs] = useState([]);
 
-    // loader
-    const [loading, setLoading] = useState(true);
-    const [withPlaceholder, setWithPlaceholder] = useState(true);
-
     const { fetchLabs } = useContext(LabContext);
 
     useEffect(() => {
@@ -36,8 +32,6 @@ const PcProvider = ({ children }) => {
                 return { pcId: pc.id, ...pc.data() }
             })
             setPcs(pcArr);
-            setWithPlaceholder(false);
-            setLoading(false);
         } catch (error) {
             console.log(error)
         }
@@ -73,7 +67,7 @@ const PcProvider = ({ children }) => {
     }
 
     return (
-        <PcContext.Provider value={{ loading, withPlaceholder, addPc, pcs, updatePc, deletePc }}>
+        <PcContext.Provider value={{ addPc, pcs, updatePc, deletePc, fetchPcs }}>
             {children}
         </PcContext.Provider>
     )
