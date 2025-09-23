@@ -3,6 +3,7 @@ import { Button, ButtonToolbar, Form, Schema, SelectPicker } from "rsuite"
 import { LabContext } from "../context/LabProvider";
 import { PcContext } from "../context/PcProvider";
 import { StudentContext } from "../context/StudentProvider";
+import { useNavigate } from "react-router-dom";
 const { StringType } = Schema.Types;
 
 const model = Schema.Model({
@@ -10,15 +11,16 @@ const model = Schema.Model({
     labLocation: StringType().isRequired("Select Lab."),
     GRID: StringType().isRequired("GRID is required."),
     studentEmail: StringType().isRequired("email is required.").isEmail("Email is not valid."),
-    AssignedPc: StringType().isRequired("Select Pc."),
+    assignedPc: StringType().isRequired("Select Pc."),
 });
+
 const AddStudent = () => {
     const [input, setInput] = useState({ studentName: "", labLocation: "", GRID: "", studentEmail: "", assignedPc: "" });
     const [pcOptions, setPcOptions] = useState([]);
+    const navigate = useNavigate();
     const { labs } = useContext(LabContext);
     const { pcs } = useContext(PcContext);
     const { addStudent } = useContext(StudentContext);
-    console.log(input)
 
     useEffect(() => {
         if (input.labLocation) {
@@ -33,8 +35,10 @@ const AddStudent = () => {
 
     const labOptions = labs.map((lab) => { return { label: lab.labName, value: lab.labId } });
     const handleSubmit = async () => {
+        console.log(input)
         try {
             await addStudent(input)
+            navigate("/all-students");
         } catch (error) {
             console.log(error)
         }
@@ -68,10 +72,10 @@ const AddStudent = () => {
                         style={{ width: '300px', textTransform: "capitalize" }}
                     />
                 </Form.Group>
-                <Form.Group controlId="AssignedPc">
+                <Form.Group controlId="assignedPc">
                     <Form.ControlLabel>PC</Form.ControlLabel>
                     <Form.Control
-                        name="AssignedPc"
+                        name="assignedPc"
                         accepter={SelectPicker}
                         data={pcOptions}
                         searchable={false}

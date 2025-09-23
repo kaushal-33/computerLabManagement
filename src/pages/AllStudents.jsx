@@ -10,7 +10,7 @@ const AllStudents = () => {
     const { labs } = useContext(LabContext);
     const { pcs } = useContext(PcContext);
     let studentArr = students.map((stu) => {
-        let pc = pcs?.find((pc) => pc?.pcId === stu.AssignedPc);
+        let pc = pcs?.find((pc) => pc?.pcId === stu.assignedPc);
         let lab = labs?.find((lab) => lab?.labId === stu.labLocation);
         return { ...stu, assignedPc: pc?.pcName || "not assigned", labLocation: lab?.labName || "not assigned" }
     })
@@ -40,7 +40,7 @@ const AllStudents = () => {
 
         },
         {
-            key: 'AssignedPc',
+            key: 'assignedPc',
             label: 'PC-Name',
             flexGrow: 1,
 

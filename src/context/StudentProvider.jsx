@@ -13,10 +13,6 @@ const StudentProvider = ({ children }) => {
 
     const { fetchLabs } = useContext(LabContext);
     const { pcs, fetchPcs } = useContext(PcContext);
-
-    const navigate = useNavigate();
-    console.log(students)
-
     useEffect(() => {
         fetchStudents();
     }, [])
@@ -24,14 +20,11 @@ const StudentProvider = ({ children }) => {
         try {
             await addDoc(collection(db, "students"), { createdAt: new Date(), ...input });
             await updateDoc(doc(db, "pcs", input.assignedPc), { pcStatus: "assigned" });
-            fetchPcs();
-            fetchLabs();
-            navigate("/all-students");
+            fetchStudents();
         } catch (error) {
             console.log(error)
         }
     }
-
     const fetchStudents = async () => {
         try {
             const { docs } = await getDocs(collection(db, "students"));
@@ -43,7 +36,6 @@ const StudentProvider = ({ children }) => {
             console.log(error)
         }
     }
-
 
     return (
         <StudentContext.Provider value={{ addStudent, students, }}>
