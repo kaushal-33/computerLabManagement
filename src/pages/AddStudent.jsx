@@ -3,7 +3,9 @@ import { Button, ButtonToolbar, Form, Schema, SelectPicker } from "rsuite"
 import { LabContext } from "../context/LabProvider";
 import { PcContext } from "../context/PcProvider";
 import { StudentContext } from "../context/StudentProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../config/fireBase";
 const { StringType } = Schema.Types;
 
 const model = Schema.Model({
@@ -18,9 +20,28 @@ const AddStudent = () => {
     const [input, setInput] = useState({ studentName: "", labLocation: "", GRID: "", studentEmail: "", assignedPc: "" });
     const [pcOptions, setPcOptions] = useState([]);
     const navigate = useNavigate();
+    const { studentId } = useParams();
     const { labs } = useContext(LabContext);
     const { pcs } = useContext(PcContext);
-    const { addStudent } = useContext(StudentContext);
+    const { addStudent, updateStudent } = useContext(StudentContext);
+
+
+    useEffect(() => {
+        if (studentId !== undefined) {
+            try {
+                const unSub = onSnapshot(doc(db, "students", studentId), (doc) => {
+                    if (doc.exists()) {
+                        setInput(doc.data());
+                    } else {
+                        console.log("No such document!");
+                    }
+                })
+                return () => unSub();
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }, [])
 
     useEffect(() => {
         if (input.labLocation) {
@@ -35,13 +56,21 @@ const AddStudent = () => {
 
     const labOptions = labs.map((lab) => { return { label: lab.labName, value: lab.labId } });
     const handleSubmit = async () => {
-        console.log(input)
-        try {
-            await addStudent(input)
-            navigate("/all-students");
-        } catch (error) {
-            console.log(error)
+        if (studentId) {
+            try {
+                await updateStudent(studentId, input)
+
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                await addStudent(input)
+            } catch (error) {
+                console.log(error)
+            }
         }
+        navigate("/all-students");
     };
     return (
         <div className="flex justify-center items-center h-full">
@@ -88,7 +117,7 @@ const AddStudent = () => {
                 </Form.Group>
                 <ButtonToolbar>
                     <Button appearance="primary" type="submit">
-                        {false ? "Update" : "Add"}
+                        {studentId ? "Update" : "Add"}
                     </Button>
                 </ButtonToolbar>
             </Form>

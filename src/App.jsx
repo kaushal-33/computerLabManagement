@@ -36,8 +36,9 @@ const App = () => {
                         <Route path="/add-pc" element={<ProtectedRoute Component={AddPc} />} />
                         <Route path="/add-pc/:pcId" element={<ProtectedRoute Component={AddPc} />} />
                         {/* students */}
-                        <Route path="/add-student" element={<ProtectedRoute Component={AddStudent} />} />
                         <Route path="/all-students" element={<ProtectedRoute Component={AllStudents} />} />
+                        <Route path="/add-student" element={<ProtectedRoute Component={AddStudent} />} />
+                        <Route path="/add-student/:studentId" element={<ProtectedRoute Component={AddStudent} />} />
                         {/* error page */}
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>

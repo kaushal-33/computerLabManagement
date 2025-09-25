@@ -8,7 +8,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
     const navigate = useNavigate();
     const { admin, handleLogOut } = useContext(AuthContext);
     return (
-        <aside className="h-screen bg-[#f7f7fa] shadow-lg">
+        <aside className="h-full bg-[#f7f7fa] shadow-lg">
             <Sidenav
                 appearance={appearance}
                 expanded={expanded}

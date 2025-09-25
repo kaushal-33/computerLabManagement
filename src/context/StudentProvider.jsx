@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { LabContext } from "./LabProvider";
 import { PcContext } from "./PcProvider";
-import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../config/fireBase";
 import { useNavigate } from "react-router-dom";
 
@@ -37,8 +37,31 @@ const StudentProvider = ({ children }) => {
         }
     }
 
+    const updateStudent = async (id, input) => {
+        try {
+            await updateDoc(doc(db, "students", id), input);
+            await updateDoc(doc(db, "pcs", input.assignedPc), { pcStatus: "assigned" });
+            fetchStudents()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteStudent = async (id) => {
+        let stu = students.find((stu) => stu.studentId === id)
+        try {
+            await deleteDoc(doc(db, "students", id));
+            await updateDoc(doc(db, "pcs", stu.assignedPc), { pcStatus: "available" });
+            fetchStudents()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
     return (
-        <StudentContext.Provider value={{ addStudent, students, }}>
+        <StudentContext.Provider value={{ addStudent, students, updateStudent, deleteStudent }}>
             {children}
         </StudentContext.Provider>
     )

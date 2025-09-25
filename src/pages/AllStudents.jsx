@@ -6,7 +6,7 @@ import { PcContext } from "../context/PcProvider";
 
 const AllStudents = () => {
 
-    const { students } = useContext(StudentContext);
+    const { students, deleteStudent } = useContext(StudentContext);
     const { labs } = useContext(LabContext);
     const { pcs } = useContext(PcContext);
     let studentArr = students.map((stu) => {
@@ -14,8 +14,6 @@ const AllStudents = () => {
         let lab = labs?.find((lab) => lab?.labId === stu.labLocation);
         return { ...stu, assignedPc: pc?.pcName || "not assigned", labLocation: lab?.labName || "not assigned" }
     })
-
-    console.log(studentArr);
 
     const tableHeadings = [
         {
@@ -59,7 +57,7 @@ const AllStudents = () => {
     ]
     return (
         <div>
-            <DataTable tableHead={tableHeadings} arr={studentArr}/>
+            <DataTable tableHead={tableHeadings} arr={studentArr} editRoute={'add-student'} idName={'student'} deleteData={deleteStudent} />
         </div>
     )
 }
