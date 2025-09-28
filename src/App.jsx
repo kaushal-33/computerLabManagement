@@ -23,7 +23,7 @@ const App = () => {
         <BrowserRouter>
             <div className="h-screen flex">
                 {admin && <AsideBar expanded={expanded} onExpand={setExpanded} openKeys={openKeys} onOpenChange={setOpenKeys} />}
-                <div className="w-full h-full border">
+                <div className="w-full h-full">
                     <Routes>
                         <Route path="/" element={<ProtectedRoute Component={Dashboard} />} />
                         <Route path="/login" element={<Login />} />

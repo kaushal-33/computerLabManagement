@@ -8,7 +8,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
     const navigate = useNavigate();
     const { admin, handleLogOut } = useContext(AuthContext);
     return (
-        <aside className="h-full bg-[#f7f7fa] shadow-lg">
+        <aside className="h-full bg-[#f7f7fa] border-e">
             <Sidenav
                 appearance={appearance}
                 expanded={expanded}
@@ -21,7 +21,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                             <img
                                 src={admin?.photoURL || "/images/user.png"}
                                 alt="Profile"
-                                className={`${expanded && "w-16 h-16"} w-10 h-10 rounded-full border border-gray-300 object-cover`}
+                                className={`${expanded && "w-16 h-16"} w-10 h-10 transition-all duration-300 rounded-full border border-gray-300 object-cover`}
                                 onError={(e) => { e.currentTarget.src = "/images/user.png"; }}
                                 loading="lazy"
                             />

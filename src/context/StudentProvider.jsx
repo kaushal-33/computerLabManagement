@@ -3,7 +3,6 @@ import { LabContext } from "./LabProvider";
 import { PcContext } from "./PcProvider";
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../config/fireBase";
-import { useNavigate } from "react-router-dom";
 
 export const StudentContext = createContext();
 
