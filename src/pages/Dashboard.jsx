@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { LabContext } from "../context/LabProvider";
 import { PcContext } from "../context/PcProvider";
@@ -35,7 +35,7 @@ const Dashboard = () => {
     const totalStudents = students.length;
 
     return (
-        <div className="container mx-auto px-4 py-4">
+        <div className={`px-4 py-4`}>
             {/* Summary cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                 <div className="bg-white shadow rounded-lg p-6 flex flex-col items-center">
@@ -51,7 +51,6 @@ const Dashboard = () => {
                     <span className="text-gray-700 mt-2">Total Students</span>
                 </div>
             </div>
-
             {/* Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 w-full gap-4">
                 <div className="bg-white shadow rounded-lg p-6">

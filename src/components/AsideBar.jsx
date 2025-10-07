@@ -8,12 +8,13 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
     const navigate = useNavigate();
     const { admin, handleLogOut } = useContext(AuthContext);
     return (
-        <aside className="h-full bg-[#f7f7fa] border-e">
+        <aside className={`h-full bg-[#f7f7fa] fixed w-[240px] bg-transparent`}>
             <Sidenav
                 appearance={appearance}
                 expanded={expanded}
                 openKeys={openKeys}
                 onOpenChange={onOpenChange}
+                style={{ height: "100vh" }}
             >
                 <Sidenav.Header>
                     <div className="flex justify-center pt-4">
@@ -28,7 +29,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                         </div>
                     </div>
                 </Sidenav.Header>
-                <Sidenav.Body>
+                <Sidenav.Body className="flex flex-col justify-between h-full">
                     <Nav {...navProps}>
                         <Nav.Item icon={<Admin />} className={"pointer-events-none hover:bg-transparent"} >
                             <div className="font-semibold text-[#37474F]">{admin?.displayName || "Admin"}</div>
@@ -47,14 +48,16 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                             <Nav.Item eventKey="5-1" onClick={() => navigate("/all-students")}>All Students</Nav.Item>
                             <Nav.Item eventKey="5-2" onClick={() => navigate("/add-student")}>Add New Student</Nav.Item>
                         </Nav.Menu>
-                        <Nav.Item icon={<Exit />} className={!expanded && "pointer-events-none hover:bg-transparent"}>
-                            <Button color="red" appearance="primary" style={{ borderRadius: 0 }} className="w-full" onClick={handleLogOut}>
+                    </Nav>
+                    <Nav>
+                        <Nav.Item icon={<Exit />}>
+                            <Button color="red" appearance="primary" style={{ borderRadius: 0, width: "100%" }} onClick={handleLogOut}>
                                 Logout
                             </Button>
                         </Nav.Item>
                     </Nav>
-                    <Sidenav.Toggle onToggle={onExpand} />
                 </Sidenav.Body>
+                <Sidenav.Toggle onToggle={onExpand} />
             </Sidenav>
         </aside>
     )

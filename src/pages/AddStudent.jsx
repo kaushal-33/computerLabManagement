@@ -46,6 +46,7 @@ const AddStudent = () => {
     useEffect(() => {
         if (input.labLocation) {
             let filteredPc = pcs.filter((pc) => pc.labLocation === input.labLocation && pc.pcStatus === "available")
+            console.log(filteredPc)
             setPcOptions(filteredPc.map((pc) => { return { label: pc.pcName, value: pc.pcId } }))
         }
     }, [input.labLocation])

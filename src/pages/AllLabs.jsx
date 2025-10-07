@@ -35,7 +35,7 @@ const AllLabs = () => {
         },
     ]
     return (
-        <div>
+        <div className="">
             <DataTable arr={labs} tableHead={tableHeadings} editRoute={"add-lab"} idName={"lab"} deleteData={deleteLab} />
         </div>
     )

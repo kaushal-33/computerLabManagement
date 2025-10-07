@@ -8,7 +8,7 @@ const ProtectedRoute = ({ Component }) => {
         return <Login />
     }
     return (
-        < Component />
+        <Component />
     )
 }
 

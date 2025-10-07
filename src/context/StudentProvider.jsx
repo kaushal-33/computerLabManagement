@@ -49,8 +49,10 @@ const StudentProvider = ({ children }) => {
     const deleteStudent = async (id) => {
         let stu = students.find((stu) => stu.studentId === id)
         try {
+            if (stu.assignedPc) {
+                await updateDoc(doc(db, "pcs", stu.assignedPc), { pcStatus: "available" });
+            }
             await deleteDoc(doc(db, "students", id));
-            await updateDoc(doc(db, "pcs", stu.assignedPc), { pcStatus: "available" });
             fetchStudents()
         } catch (error) {
             console.log(error)
