@@ -41,9 +41,11 @@ const LabProvider = ({ children }) => {
     const deleteLab = async (labId) => {
         try {
             const pcsSnapshot = await getDocs(query(collection(db, "pcs"), where("labLocation", "==", labId)));
-            pcsSnapshot.forEach(pcDoc => {
-                updateDoc(doc(db, "pcs", pcDoc.id), { labLocation: null });
-            });
+            await Promise.all(
+                pcsSnapshot.docs.map((pcDoc) =>
+                    updateDoc(doc(db, "pcs", pcDoc.id), { labLocation: null })
+                )
+            );
             await deleteDoc(doc(db, "labs", labId));
             fetchLabs();
         } catch (error) {

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { LabContext } from "./LabProvider";
 import { PcContext } from "./PcProvider";
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../config/fireBase";
 
 export const StudentContext = createContext();
@@ -50,7 +50,12 @@ const StudentProvider = ({ children }) => {
         let stu = students.find((stu) => stu.studentId === id)
         try {
             if (stu.assignedPc) {
-                await updateDoc(doc(db, "pcs", stu.assignedPc), { pcStatus: "available" });
+                const pcRef = doc(db, "pcs", stu.assignedPc);
+                const pcSnap = await getDoc(pcRef);
+
+                if (pcSnap.exists()) {
+                    await updateDoc(pcRef, { pcStatus: "available" });
+                }
             }
             await deleteDoc(doc(db, "students", id));
             fetchStudents()

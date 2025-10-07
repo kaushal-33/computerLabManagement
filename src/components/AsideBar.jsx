@@ -8,7 +8,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
     const navigate = useNavigate();
     const { admin, handleLogOut } = useContext(AuthContext);
     return (
-        <aside className={`h-full bg-[#f7f7fa] fixed w-[240px] bg-transparent`}>
+        <aside className={`h-full bg-[#f7f7fa] overflow-auto  fixed w-[240px] bg-transparent`}>
             <Sidenav
                 appearance={appearance}
                 expanded={expanded}
@@ -29,7 +29,7 @@ const AsideBar = ({ appearance, openKeys, expanded, onOpenChange, onExpand, ...n
                         </div>
                     </div>
                 </Sidenav.Header>
-                <Sidenav.Body className="flex flex-col justify-between h-full">
+                <Sidenav.Body className="flex flex-col justify-between h-full relative">
                     <Nav {...navProps}>
                         <Nav.Item icon={<Admin />} className={"pointer-events-none hover:bg-transparent"} >
                             <div className="font-semibold text-[#37474F]">{admin?.displayName || "Admin"}</div>

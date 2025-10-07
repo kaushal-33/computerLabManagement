@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, increment, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, increment, query, updateDoc, where } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react"
 import { db } from "../config/fireBase";
 import { LabContext } from "./LabProvider";
@@ -52,31 +52,43 @@ const PcProvider = ({ children }) => {
     }
 
     const deletePc = async (id) => {
-        const obj = pcs?.find((pc) => pc.pcId === id);
-        const { labLocation } = obj;
         try {
-            if (labLocation) {
-                await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(1) });
-            }
+            const obj = pcs?.find((pc) => pc.pcId === id);
+            const { labLocation } = obj;
 
+            if (labLocation) {
+                const labRef = doc(db, "labs", labLocation);
+                const labSnap = await getDoc(labRef);
+
+                if (labSnap.exists()) {
+                    await updateDoc(labRef, { availableCapacity: increment(1) });
+                }
+            }
 
             try {
-                let stuSnapshot = await getDocs(query(collection(db, "students"), where("assignedPc", "==", id)));
-                stuSnapshot.forEach(stu => {
-                    updateDoc(doc(db, "students", stu.id), { assignedPc: null });
-                });
+                const stuSnapshot = await getDocs(
+                    query(collection(db, "students"), where("assignedPc", "==", id))
+                );
+
+                await Promise.all(
+                    stuSnapshot.docs.map(stu =>
+                        updateDoc(doc(db, "students", stu.id), { assignedPc: null })
+                    )
+                );
             } catch (error) {
-                console.log(error)
+                console.log("Error unassigning students:", error);
             }
 
-
             await deleteDoc(doc(db, "pcs", id));
+
+            await fetchLabs();
+            await fetchPcs();
         } catch (error) {
-            console.log(error);
+            console.log("Error deleting PC:", error);
         }
-        fetchLabs();
-        fetchPcs();
-    }
+
+    };
+
 
     return (
         <PcContext.Provider value={{ addPc, pcs, updatePc, deletePc, fetchPcs }}>

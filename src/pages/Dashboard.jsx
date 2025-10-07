@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     // bar chart
     const labData = labs.map(lab => ({
-        name: lab.labLocation || "Unknown",
+        name: lab.labLocation?.toUpperCase() || "Unknown",
         Capacity: lab.labCapacity,
         Available: lab.availableCapacity,
     }));
