@@ -57,8 +57,8 @@ const PcProvider = ({ children }) => {
         const { labLocation } = obj;
         // console.log(obj);
         try {
-            await deleteDoc(doc(db, "pcs", id));
             await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(1) });
+            await deleteDoc(doc(db, "pcs", id));
             fetchLabs();
             fetchPcs();
         } catch (error) {
