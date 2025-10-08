@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { Table, Placeholder, Loader } from "rsuite";
+import { Table, Placeholder, Loader, Toggle } from "rsuite";
 import { LabContext } from "../context/LabProvider";
-import { CloseOutline, Edit } from "@rsuite/icons";
+import { CloseOutline, Edit, Tools } from "@rsuite/icons";
 import { useNavigate } from "react-router-dom";
 
-const DataTable = ({ arr, tableHead, editRoute, idName, deleteData }) => {
+const DataTable = ({ arr, tableHead, editRoute, idName, deleteData, toggleBtn }) => {
     const navigate = useNavigate();
     const { loading, withPlaceholder } = useContext(LabContext);
     const { Column, HeaderCell, Cell } = Table;
@@ -55,6 +55,7 @@ const DataTable = ({ arr, tableHead, editRoute, idName, deleteData }) => {
                                         <div style={{ display: "flex", gap: "1rem" }}>
                                             <button className="text-blue-600" title="Edit" onClick={() => { navigate(`/${editRoute}/${rowData[`${idName}Id`]}`) }}><Edit /></button>
                                             <button className="text-red-600" title="Delete" onClick={() => deleteData(rowData[`${idName}Id`])}><CloseOutline /></button>
+                                            {toggleBtn && <Toggle size={'sm'} title="Maintenance" color="orange"><Tools /></Toggle>}
                                         </div>
                                     )}
                                 </Cell>

@@ -30,16 +30,20 @@ const StudentProvider = ({ children }) => {
             const stuArr = docs?.map((stu) => { return { studentId: stu.id, ...stu.data() } })
             setStudents(stuArr);
             fetchPcs();
-            fetchLabs();
         } catch (error) {
             console.log(error)
         }
     }
 
     const updateStudent = async (id, input) => {
+        const stu = students.find(stu => stu.studentId === id);
+        console.log(stu, input.assignedPc)
         try {
             await updateDoc(doc(db, "students", id), input);
-            await updateDoc(doc(db, "pcs", input.assignedPc), { pcStatus: "assigned" });
+            if (stu.assignedPc !== input.assignedPc) {
+                await updateDoc(doc(db, "pcs", input.assignedPc), { pcStatus: "assigned" });
+                await updateDoc(doc(db, "pcs", stu.assignedPc), { pcStatus: "available" });
+            }
             fetchStudents()
         } catch (error) {
             console.log(error)
