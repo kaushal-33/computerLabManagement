@@ -9,7 +9,7 @@ const PcProvider = ({ children }) => {
     const [pcs, setPcs] = useState([]);
 
     const { fetchLabs } = useContext(LabContext);
-
+    console.log(pcs)
     useEffect(() => {
         fetchPcs();
     }, [])
@@ -38,18 +38,25 @@ const PcProvider = ({ children }) => {
     }
 
     const updatePc = async (id, input) => {
-        const obj = pcs?.find(pc => pc.pcId === id)
+        const obj = pcs?.find(pc => pc.pcId === id);
         const { labLocation } = input;
         try {
+            if (obj?.labLocation) {
+                await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(-1) });
+                await updateDoc(doc(db, "labs", obj.labLocation), { availableCapacity: increment(1) });
+            } else {
+                await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(-1) });
+            }
+
             await updateDoc(doc(db, "pcs", id), input);
-            await updateDoc(doc(db, "labs", labLocation), { availableCapacity: increment(-1) });
-            await updateDoc(doc(db, "labs", obj.labLocation), { availableCapacity: increment(1) });
+            fetchPcs();
+            fetchLabs();
         } catch (error) {
-            console.log(error)
+            console.log("Error updating PC or labs:", error);
         }
-        fetchPcs();
-        fetchLabs();
-    }
+    };
+
+
 
     const deletePc = async (id) => {
         try {
