@@ -8,7 +8,7 @@ const Login = () => {
     return (
         <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
             <div className="space-y-6 max-w-md w-full">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-800 text-center">Admin Panel Login</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-800 text-center">Login</h2>
                 <LoginForm />
                 <button
                     type="button"

@@ -9,7 +9,7 @@ const { StringType } = Schema.Types;
 const model = Schema.Model({
     email: StringType()
         .isEmail("Please enter a valid email address.")
-        .isRequired("This field is required."),
+        .isRequired("Email is required."),
     password: StringType().isRequired("Password is required.").minLength(6),
 });
 

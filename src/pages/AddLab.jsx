@@ -50,28 +50,72 @@ const AddLab = () => {
         navigate("/all-labs");
     };
     return (
-        <div className="flex justify-center items-center h-full">
-            <Form model={model} formValue={input} onChange={handleChange} onSubmit={handleSubmit}>
-                <Form.Group controlId="labName">
-                    <Form.ControlLabel>Lab Name</Form.ControlLabel>
-                    <Form.Control name="labName" type="text" />
-                </Form.Group>
-                <Form.Group controlId="labLocation">
-                    <Form.ControlLabel>Location</Form.ControlLabel>
-                    <Form.Control name="labLocation" type="text" />
-                </Form.Group>
-                <Form.Group controlId="labCapacity" >
-                    <Form.ControlLabel>Lab Capacity</Form.ControlLabel>
-                    <Form.Control name="labCapacity" type="number" disabled={labId ? true : false} />
-                </Form.Group>
-                <ButtonToolbar>
-                    <Button appearance="primary" type="submit">
-                        {labId ? "Update" : "Add"}
-                    </Button>
-                </ButtonToolbar>
-            </Form>
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+            <div className="w-full max-w-md p-8 rounded-2xl shadow-lg bg-white border border-gray-200">
+                <div className="mb-6">
+                    <h2 className="text-2xl font-semibold text-center text-blue-700 tracking-tight">
+                        {labId ? "Update Lab" : "Add New Lab"}
+                    </h2>
+                    <p className="text-gray-500 text-center text-sm">
+                        Enter lab details below
+                    </p>
+                </div>
+                <Form
+                    model={model}
+                    formValue={input}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    fluid
+                    className="space-y-6"
+                >
+                    <Form.Group controlId="labName">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Lab Name
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="labName"
+                            type="text"
+                            className="rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Enter lab name"
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="labLocation">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Location
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="labLocation"
+                            type="text"
+                            className="rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Enter lab location"
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="labCapacity">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Lab Capacity
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="labCapacity"
+                            type="number"
+                            disabled={labId ? true : false}
+                            className="rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Lab maximum capacity"
+                            min={1}
+                        />
+                    </Form.Group>
+                    <ButtonToolbar className="flex justify-end gap-3 pt-4">
+                        <Button appearance="primary" type="submit">
+                            {labId ? "Update" : "Add"}
+                        </Button>
+                        <Button appearance="ghost" onClick={() => navigate("/all-labs")}>
+                            Cancel
+                        </Button>
+                    </ButtonToolbar>
+                </Form>
+            </div>
         </div>
-    )
+    );
+
 }
 
 export default AddLab

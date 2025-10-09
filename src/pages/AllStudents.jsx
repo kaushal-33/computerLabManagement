@@ -57,7 +57,7 @@ const AllStudents = () => {
     ]
     return (
         <div>
-            <DataTable tableHead={tableHeadings} arr={studentArr} editRoute={'add-student'} idName={'student'} deleteData={deleteStudent} />
+            <DataTable tableName={"All Student"} tableHead={tableHeadings} arr={studentArr} editRoute={'add-student'} idName={'student'} deleteData={deleteStudent} />
         </div>
     )
 }

@@ -36,7 +36,7 @@ const AllLabs = () => {
     ]
     return (
         <div className="">
-            <DataTable arr={labs} tableHead={tableHeadings} editRoute={"add-lab"} idName={"lab"} deleteData={deleteLab} />
+            <DataTable tableName={"All Lab"} arr={labs} tableHead={tableHeadings} editRoute={"add-lab"} idName={"lab"} deleteData={deleteLab} />
         </div>
     )
 }

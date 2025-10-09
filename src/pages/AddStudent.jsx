@@ -74,55 +74,104 @@ const AddStudent = () => {
         navigate("/all-students");
     };
     return (
-        <div className="flex justify-center items-center h-full">
-            <Form model={model} formValue={input} onChange={handleChange} onSubmit={handleSubmit}>
-                <Form.Group controlId="studentName">
-                    <Form.ControlLabel>Student Name</Form.ControlLabel>
-                    <Form.Control name="studentName" type="text" />
-                </Form.Group>
-                <Form.Group controlId="GRID">
-                    <Form.ControlLabel>Student GRID</Form.ControlLabel>
-                    <Form.Control name="GRID" type="number" />
-                </Form.Group>
-                <Form.Group controlId="studentEmail">
-                    <Form.ControlLabel>Student Email</Form.ControlLabel>
-                    <Form.Control name="studentEmail" type="email" />
-                </Form.Group>
-                <Form.Group controlId="labLocation">
-                    <Form.ControlLabel>Lab Location</Form.ControlLabel>
-                    <Form.Control
-                        name="labLocation"
-                        accepter={SelectPicker}
-                        data={labOptions}
-                        searchable={false}
-                        renderMenuItem={(label) => (
-                            <span className='capitalize'>{label}</span>
-                        )}
-                        placeholder="Select a lab"
-                        style={{ width: '300px', textTransform: "capitalize" }}
-                    />
-                </Form.Group>
-                <Form.Group controlId="assignedPc">
-                    <Form.ControlLabel>PC</Form.ControlLabel>
-                    <Form.Control
-                        name="assignedPc"
-                        accepter={SelectPicker}
-                        data={pcOptions}
-                        searchable={false}
-                        renderMenuItem={(label) => (
-                            <span className='capitalize'>{label}</span>
-                        )}
-                        placeholder="Select a lab"
-                        style={{ width: '300px', textTransform: "capitalize" }}
-                    />
-                </Form.Group>
-                <ButtonToolbar>
-                    <Button appearance="primary" type="submit">
-                        {studentId ? "Update" : "Add"}
-                    </Button>
-                </ButtonToolbar>
-            </Form>
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+            <div className="w-full max-w-xl p-8 rounded-2xl shadow-lg bg-white border border-gray-200">
+                <h2 className="text-2xl font-semibold text-center text-blue-700 mb-2">
+                    {studentId ? "Update Student" : "Add New Student"}
+                </h2>
+                <p className="mb-6 text-gray-500 text-center">Enter student and assignment details below</p>
+                <Form
+                    model={model}
+                    formValue={input}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    fluid
+                    className="space-y-5"
+                >
+                    <Form.Group controlId="studentName">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Student Name
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="studentName"
+                            type="text"
+                            placeholder="Enter student name"
+                            className="rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="GRID">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Student GRID
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="GRID"
+                            type="number"
+                            placeholder="Enter GRID"
+                            className="rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="studentEmail">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Student Email
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="studentEmail"
+                            type="email"
+                            placeholder="Enter student email"
+                            className="rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-300"
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="labLocation">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            Lab Location
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="labLocation"
+                            accepter={SelectPicker}
+                            data={labOptions}
+                            searchable={false}
+                            renderMenuItem={(label) => (
+                                <span className='capitalize'>{label}</span>
+                            )}
+                            placeholder="Select a lab"
+                            style={{ width: '100%' }}
+                            className="rounded-lg border-gray-300"
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="assignedPc">
+                        <Form.ControlLabel className="font-medium text-gray-600 mb-1">
+                            PC
+                        </Form.ControlLabel>
+                        <Form.Control
+                            name="assignedPc"
+                            accepter={SelectPicker}
+                            data={pcOptions}
+                            searchable={false}
+                            renderMenuItem={(label) => (
+                                <span className='capitalize'>{label}</span>
+                            )}
+                            placeholder="Select a PC"
+                            style={{ width: '100%' }}
+                            className="rounded-lg border-gray-300"
+                        />
+                    </Form.Group>
+
+                    <ButtonToolbar className="flex justify-end gap-3 pt-4">
+                        <Button appearance="primary" type="submit">
+                            {studentId ? "Update" : "Add"}
+                        </Button>
+                        <Button appearance="ghost" onClick={() => navigate("/all-students")}>
+                            Cancel
+                        </Button>
+                    </ButtonToolbar>
+                </Form>
+            </div>
         </div>
+
     )
 }
 

@@ -4,7 +4,6 @@ import Dashboard from "./pages/Dashboard"
 import Login from "./pages/Login"
 import ErrorPage from "./pages/ErrorPage"
 import AllLabs from "./pages/AllLabs"
-import AddLab from "./pages/addLab"
 import AsideBar from "./components/AsideBar"
 import { useContext, useState } from "react"
 import { AuthContext } from "./context/AuthProvider"
@@ -12,6 +11,7 @@ import AddPc from "./pages/AddPc"
 import AllPcs from "./pages/AllPcs"
 import AddStudent from "./pages/AddStudent"
 import AllStudents from "./pages/AllStudents"
+import AddLab from "./pages/AddLab"
 
 const App = () => {
     // for aside bar
