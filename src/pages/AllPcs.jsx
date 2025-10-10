@@ -4,7 +4,7 @@ import DataTable from "../components/DataTable";
 import { LabContext } from "../context/LabProvider";
 
 const AllPcs = () => {
-    const { pcs, deletePc } = useContext(PcContext);
+    const { pcs, deletePc, handleCheck } = useContext(PcContext);
     const { labs } = useContext(LabContext);
     const pcArr = pcs.map((pc) => {
         const { labLocation, ...rest } = pc;
@@ -43,7 +43,7 @@ const AllPcs = () => {
     ]
     return (
         <div>
-            <DataTable tableName={"All PC"} tableHead={tableHeadings} arr={pcArr} editRoute={"add-pc"} idName={"pc"} deleteData={deletePc} toggleBtn={"Maintenance"} />
+            <DataTable tableName={"All PC"} tableHead={tableHeadings} arr={pcArr} editRoute={"add-pc"} idName={"pc"} deleteData={deletePc} toggleBtn={"Maintenance"} maintenanceChecked={handleCheck} />
         </div>
     )
 }

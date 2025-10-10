@@ -10,7 +10,7 @@ const StudentProvider = ({ children }) => {
     // all students
     const [students, setStudents] = useState([]);
 
-    const { fetchLabs } = useContext(LabContext);
+    // const { fetchLabs } = useContext(LabContext);
     const { pcs, fetchPcs } = useContext(PcContext);
     useEffect(() => {
         fetchStudents();

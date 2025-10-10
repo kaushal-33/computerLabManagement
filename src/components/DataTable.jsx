@@ -4,7 +4,7 @@ import { LabContext } from "../context/LabProvider";
 import { CloseOutline, Edit, Tools } from "@rsuite/icons";
 import { useNavigate } from "react-router-dom";
 
-const DataTable = ({ tableName, arr, tableHead, editRoute, idName, deleteData, toggleBtn }) => {
+const DataTable = ({ tableName, arr, tableHead, editRoute, idName, deleteData, toggleBtn, maintenanceChecked }) => {
     const navigate = useNavigate();
     const { loading, withPlaceholder } = useContext(LabContext);
     const { Column, HeaderCell, Cell } = Table;
@@ -121,7 +121,7 @@ const DataTable = ({ tableName, arr, tableHead, editRoute, idName, deleteData, t
                                                             <CloseOutline />
                                                         </button>
                                                         {toggleBtn && (
-                                                            <Toggle size="sm" title="Maintenance" color="orange" className="ml-1">
+                                                            <Toggle size="sm" title="Maintenance" checked={rowData.pcStatus === "maintenance"} onChange={(e) => maintenanceChecked(rowData, e)} color="orange" className="ml-1">
                                                                 <Tools />
                                                             </Toggle>
                                                         )}

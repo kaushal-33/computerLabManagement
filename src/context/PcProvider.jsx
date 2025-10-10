@@ -9,7 +9,7 @@ const PcProvider = ({ children }) => {
     const [pcs, setPcs] = useState([]);
 
     const { fetchLabs } = useContext(LabContext);
-    console.log(pcs)
+    // console.log(pcs)
     useEffect(() => {
         fetchPcs();
     }, [])
@@ -36,7 +36,6 @@ const PcProvider = ({ children }) => {
             console.log(error)
         }
     }
-
     const updatePc = async (id, input) => {
         const obj = pcs?.find(pc => pc.pcId === id);
         const { labLocation } = input;
@@ -55,9 +54,6 @@ const PcProvider = ({ children }) => {
             console.log("Error updating PC or labs:", error);
         }
     };
-
-
-
     const deletePc = async (id) => {
         try {
             const obj = pcs?.find((pc) => pc.pcId === id);
@@ -95,10 +91,25 @@ const PcProvider = ({ children }) => {
         }
 
     };
+    const handleCheck = async (pc, checked) => {
+        try {
+            const stuSnapshot = await getDocs(query(collection(db, "students"), where("assignedPc", "==", pc.pcId)))
+            // console.log(stu.docs[0].id);
+            if (!stuSnapshot.empty) {
+                let id = stuSnapshot.docs[0].id
+                updateDoc(doc(db, "students", id), { assignedPc: null })
+            }
+            const status = checked ? "maintenance" : "available";
+            await updateDoc(doc(db, "pcs", pc.pcId), { pcStatus: status });
+            await fetchPcs();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 
     return (
-        <PcContext.Provider value={{ addPc, pcs, updatePc, deletePc, fetchPcs }}>
+        <PcContext.Provider value={{ addPc, pcs, updatePc, deletePc, fetchPcs, handleCheck }}>
             {children}
         </PcContext.Provider>
     )
