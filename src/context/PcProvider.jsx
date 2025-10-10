@@ -96,8 +96,8 @@ const PcProvider = ({ children }) => {
             const stuSnapshot = await getDocs(query(collection(db, "students"), where("assignedPc", "==", pc.pcId)))
             // console.log(stu.docs[0].id);
             if (!stuSnapshot.empty) {
-                let id = stuSnapshot.docs[0].id
-                updateDoc(doc(db, "students", id), { assignedPc: null })
+                let id = stuSnapshot.docs[0].id;
+                await updateDoc(doc(db, "students", id), { assignedPc: null })
             }
             const status = checked ? "maintenance" : "available";
             await updateDoc(doc(db, "pcs", pc.pcId), { pcStatus: status });

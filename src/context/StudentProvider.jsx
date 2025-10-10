@@ -41,9 +41,9 @@ const StudentProvider = ({ children }) => {
         try {
             await updateDoc(doc(db, "students", id), input);
             if (stu.assignedPc !== input.assignedPc) {
-                await updateDoc(doc(db, "pcs", input.assignedPc), { pcStatus: "assigned" });
                 await updateDoc(doc(db, "pcs", stu.assignedPc), { pcStatus: "available" });
             }
+            await updateDoc(doc(db, "pcs", input.assignedPc), { pcStatus: "assigned" });
             fetchStudents()
         } catch (error) {
             console.log(error)
@@ -71,7 +71,7 @@ const StudentProvider = ({ children }) => {
 
 
     return (
-        <StudentContext.Provider value={{ addStudent, students, updateStudent, deleteStudent }}>
+        <StudentContext.Provider value={{ addStudent, students, updateStudent, deleteStudent, fetchStudents }}>
             {children}
         </StudentContext.Provider>
     )
